@@ -150,41 +150,102 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 a.ghost{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px}
 a.ghost:hover{border-color:var(--coral);color:var(--coral)}
 
-/* ============ Header & Layout Rearrangement ============ */
+/* ============ HEADER FIX ============ */
+
+/* 1. تثبيت الهيدر فـ الفوق */
 header, .header, nav {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background-color: var(--navy, #0b132b) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
-  padding: 10px 14px !important;
+  background-color: var(--navy, #0b132b73) !important;
+  box-shadow: 0 4px 12px rgba(71, 71, 71, 0.4) !important;
+  padding: 8px 10px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-/* ترتيب العناصر داخل الهيدر العلوي */
+/* 2. تنظيم السطر الأول (اللوجو + الاسم + Contact + باقي الأزرار) */
 header > div:first-child, 
-.header-top, 
-.nav-container {
+.nav-container, 
+.top-bar {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   justify-content: space-between !important;
-  gap: 8px !important;
+  flex-wrap: nowrap !important; /* يمنع نزول الأزرار لسطر جديد */
   width: 100% !important;
+  gap: 4px !important;
 }
 
-/* محاذاة زر Contact مع الأزرار العلوية */
-header button, 
-.contact-btn, 
-a[href*="contact"] {
-  margin: 0 !important;
+/* تصغير وتنسيق زر Contact والأزرار العلوية لتنسجم فـ صف واحد */
+header button, header a, .contact-btn {
+  font-size: 0.72rem !important;
+  padding: 5px 8px !important;
   white-space: nowrap !important;
+  margin: 0 !important;
 }
 
-/* رفع خانة البحث وتوسيعها لـ 100% في السطر الثاني */
+/* 3. نقل حقل البحث للسطر الثاني وتوسيع العرض */
 header input[type="search"], 
 header input, 
 .search-bar {
   width: 100% !important;
-  margin-top: 8px !important;
+  margin-top: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 0.85rem !important;
   box-sizing: border-box !important;
+  border-radius: 20px !important;
 }
 
+/* 4. تنسيق باقي عناصر الصفحة فـ الهاتف (عمودين متناسقين) */
+@media (max-width: 760px) {
+  /* تحرير الحاوية الرئيسية */
+  main, section, .shop-container, .products-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .sidebar, .filters, .shop-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* ممر الأقسام الأفقي */
+  .cats, .categories, .filter-buttons {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 8px !important;
+    padding-bottom: 6px !important;
+    width: 100% !important;
+  }
+
+  /* عرض المنتجات فـ عمودين مقادين 100% */
+  #products, .products-grid, .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .pic, .pic img, .card img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: cover !important;
+  }
+}
