@@ -149,3 +149,42 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 [hidden]{display:none!important}
 a.ghost{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px}
 a.ghost:hover{border-color:var(--coral);color:var(--coral)}
+
+/* ============ Header & Layout Rearrangement ============ */
+header, .header, nav {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  background-color: var(--navy, #0b132b) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  padding: 10px 14px !important;
+}
+
+/* ترتيب العناصر داخل الهيدر العلوي */
+header > div:first-child, 
+.header-top, 
+.nav-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+/* محاذاة زر Contact مع الأزرار العلوية */
+header button, 
+.contact-btn, 
+a[href*="contact"] {
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* رفع خانة البحث وتوسيعها لـ 100% في السطر الثاني */
+header input[type="search"], 
+header input, 
+.search-bar {
+  width: 100% !important;
+  margin-top: 8px !important;
+  box-sizing: border-box !important;
+}
+
