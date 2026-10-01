@@ -150,88 +150,80 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 a.ghost{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px}
 a.ghost:hover{border-color:var(--coral);color:var(--coral)}
 
-/* ============ HEADER FIX ============ */
+/* ==================== FINAL CLEAN MOBILE & THEME FIX ==================== */
 
-/* 1. تثبيت الهيدر فـ الفوق */
+/* 1. إصلاح الهيدر ليدعم الوضع النهاري/الداكن والبلور بلمسة ناعمة */
 header, .header, nav {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background-color: var(--navy, #0b132b73) !important;
-  box-shadow: 0 4px 12px rgba(71, 71, 71, 0.4) !important;
-  padding: 8px 10px !important;
+  /* اعتماد متطلبات الثيم تلقائياً للوضعين */
+  background-color: var(--bg-header, rgba(11, 19, 43, 0.85)) !important; 
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.1)) !important;
+  padding: 8px 12px !important;
   width: 100% !important;
   box-sizing: border-box !important;
 }
 
-/* 2. تنظيم السطر الأول (اللوجو + الاسم + Contact + باقي الأزرار) */
-header > div:first-child, 
-.nav-container, 
-.top-bar {
+/* دعم لون خلفية الهيدر فـ Light Mode إذا كان متغيراً */
+[data-theme="light"] header, body.light header {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  color: #000 !important;
+}
+
+/* 2. تنظيم أزرار الهيدر فـ صف واحد ممتد */
+header > div:first-child, .nav-container, .top-bar {
   display: flex !important;
-  flex-direction: row !important;
   align-items: center !important;
   justify-content: space-between !important;
-  flex-wrap: nowrap !important; /* يمنع نزول الأزرار لسطر جديد */
+  flex-wrap: nowrap !important;
   width: 100% !important;
-  gap: 4px !important;
+  gap: 6px !important;
 }
 
-/* تصغير وتنسيق زر Contact والأزرار العلوية لتنسجم فـ صف واحد */
-header button, header a, .contact-btn {
-  font-size: 0.72rem !important;
-  padding: 5px 8px !important;
-  white-space: nowrap !important;
-  margin: 0 !important;
-}
-
-/* 3. نقل حقل البحث للسطر الثاني وتوسيع العرض */
-header input[type="search"], 
-header input, 
-.search-bar {
+header input[type="search"], header input, .search-bar {
   width: 100% !important;
   margin-top: 6px !important;
-  padding: 8px 12px !important;
-  font-size: 0.85rem !important;
   box-sizing: border-box !important;
-  border-radius: 20px !important;
 }
 
-/* 4. تنسيق باقي عناصر الصفحة فـ الهاتف (عمودين متناسقين) */
+/* 3. إصلاح المساحات الجانبية وقسم البانر والتقييمات للهاتف */
 @media (max-width: 760px) {
-  /* تحرير الحاوية الرئيسية */
-  main, section, .shop-container, .products-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
+  /* حصر العرض لتفادي المسافات الفارغة فـ الجوانب */
+  html, body {
+    overflow-x: hidden !important;
     width: 100% !important;
-    padding: 8px !important;
+  }
+
+  main, section, .hero, .shop-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
     box-sizing: border-box !important;
   }
 
-  .sidebar, .filters, .shop-header {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-bottom: 10px !important;
-  }
-
-  /* ممر الأقسام الأفقي */
-  .cats, .categories, .filter-buttons {
+  /* ترتيب قسم Hero (التقييمات والخصائص) */
+  .hero {
     display: flex !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    gap: 8px !important;
-    padding-bottom: 6px !important;
-    width: 100% !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    padding: 16px 12px !important;
+    border-radius: 16px !important;
   }
 
-  /* عرض المنتجات فـ عمودين مقادين 100% */
+  /* المنتجات: عمودان متجاوران بدون ضغط أو فراغات خارجية */
   #products, .products-grid, .grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px !important;
     width: 100% !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 10px 0 !important;
     box-sizing: border-box !important;
   }
 
@@ -240,12 +232,5 @@ header input,
     max-width: 100% !important;
     margin: 0 !important;
     box-sizing: border-box !important;
-  }
-
-  .pic, .pic img, .card img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1 / 1 !important;
-    object-fit: cover !important;
   }
 }
