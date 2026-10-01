@@ -4,7 +4,7 @@ html{scroll-behavior:smooth}
 body{font-family:"DM Sans",system-ui,sans-serif;background:var(--bg);color:var(--navy);line-height:1.6}
 h1,h2,.logo{font-family:Outfit,sans-serif}
 
-.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;padding:12px clamp(16px,5vw,56px);background:rgba(247,244,238,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;padding:12px clamp(16px,5vw,56px);background:rgba(247,244,238,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem;color:var(--navy);text-decoration:none}
 .logo img{width:40px;height:40px;border-radius:50%;object-fit:cover}
 .search{flex:1;max-width:420px;margin-inline-start:auto}
@@ -45,7 +45,7 @@ main{padding:16px clamp(16px,5vw,56px) 64px}
 .fab:hover{transform:scale(1.05)}
 footer{padding:24px clamp(16px,5vw,56px) 96px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
 :focus-visible{outline:3px solid var(--sky);outline-offset:2px}
-@media (max-width:760px){.hero{grid-template-columns:1fr;border-radius:20px}.stats{grid-template-columns:repeat(3,1fr)}.stats li{padding:12px}.stats b{font-size:1.3rem}.top .pill{display:none}.fab span{display:none}.fab{padding:16px}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
 .contact{margin:0 clamp(16px,5vw,56px) 48px;padding:clamp(28px,5vw,56px);border-radius:28px;background:var(--navy);color:#fff}
@@ -61,6 +61,61 @@ footer{padding:24px clamp(16px,5vw,56px) 96px;border-top:1px solid var(--line);f
 .ghost{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;font:500 .85rem "DM Sans",sans-serif;cursor:pointer}
 .trust{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 32px;margin:0 clamp(16px,5vw,56px);color:var(--muted);font-size:.9rem;font-weight:500}
 .trust li::before{content:"✓";margin-inline-end:8px;color:var(--coral);font-weight:800}
+/* ============ Mobile Layout & Header Fix ============ */
+@media (max-width: 760px) {
+  /* جعل الحاوية التي تجمع العنوان والمنتجات تتجه عمودياً */
+  main, section, .shop-container, .products-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* جعل قسم العنوان والأقسام يأخذ العرض الكامل كاملاً فوق المنتجات */
+  .sidebar, .filters, header, .shop-header, div:has(> .cats) {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 15px !important;
+  }
+
+  /* جعل أزرار الأقسام قابلة للتمرير الأفقي بشكل أنيق */
+  .cats, .categories, .filter-buttons {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+    width: 100% !important;
+  }
+
+  /* إلغاء انحشار المنتجات وإعطائها الشاشة بالكامل بعمودين */
+  #products, .products-grid, .grid, div:has(> .card) {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ضبط بطاقات المنتجات */
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .pic img, .card img {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+
 .block{padding:32px clamp(16px,5vw,56px)}
 .block>h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;margin-bottom:16px}
 #featured{padding:0}
@@ -80,7 +135,7 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 .buy.wa{background:#25d366}.buy.wa:hover{background:#1da851}
 .cat{font-size:.8rem;color:var(--coral);font-weight:500}
 [dir=rtl] .hero h1{max-width:none}
-@media (max-width:760px){dialog[open]{grid-template-columns:1fr;max-height:92vh;overflow:auto}.top{flex-wrap:wrap;position:static}.search{order:3;max-width:none;flex-basis:100%}}
+@media (max-width:760px){dialog[open]{grid-template-columns:1fr;max-height:92vh;overflow:auto}.top{flex-wrap:wrap}.search{order:3;max-width:none;flex-basis:100%}}
 
 :root[data-theme="dark"]{--bg:#0b1220;--card:#152033;--line:#26344d;--muted:#9aa7bb;--navy:#1c2b45}
 [data-theme="dark"] body,[data-theme="dark"] .logo,[data-theme="dark"] dialog{color:#eef2f8}
@@ -95,28 +150,35 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 a.ghost{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px}
 a.ghost:hover{border-color:var(--coral);color:var(--coral)}
 
-.numtag{position:absolute;bottom:10px;inset-inline-start:10px;padding:4px 12px;border-radius:8px;background:#ff6b4a;color:#fff;font:700 1rem Outfit,sans-serif}
+/* 1. إصلاح خلفية الهيدر فالوضع المظلم والنهاري */
+header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+  background-color: var(--bg-card, #0b132b74) !important;
+  background-blur: 12px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
 
-/* ===== MOBILE FIX ===== */
-@media (max-width:760px){
-  html{scroll-padding-top:64px}
-  .top{position:sticky;top:0;flex-wrap:nowrap;gap:8px;padding:10px 12px}
-  .logo{flex:none}
-  .logo span{display:none}
-  .logo img{width:34px;height:34px;flex:none}
-  .search{order:0;flex:1 1 0;min-width:0;max-width:none;margin:0}
-  .search input{padding:8px 12px;font-size:.82rem}
-  .ghost{padding:7px 10px;font-size:.78rem}
-  .top .pill{display:inline-block;padding:8px 12px;font-size:.8rem}
-  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .card{border-radius:14px}
-  .body{padding:10px 12px 12px;gap:4px}
-  .card h2{font-size:.88rem}
-  .card p{font-size:.76rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .price{font-size:.82rem}
-  .price.muted{font-size:.72rem}
-  .buy{padding:9px;font-size:.78rem;border-radius:10px}
-  .badge{top:8px;inset-inline-start:8px;padding:3px 9px;font-size:.66rem}
-  .heart{top:8px;inset-inline-end:8px;width:30px;height:30px;font-size:1rem}
-  .block{padding:24px 14px}
+/* 2. جمع الشعار والأزرار بزر Contact فسطر واحد متناسق */
+header > div, header .nav-container, header nav {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 4px !important;
+}
+
+
+/* 3. تصغير حجم زر Contact وحفظ مسافة فالموبايل باش ما ينزلش */
+header button, header a, .contact-btn {
+  white-space: nowrap !important;
+  font-size: 0.82rem !important;
+  padding: 8px 25px !important;
+  flex-shrink: 10 !important;
+
+
+    
 }
