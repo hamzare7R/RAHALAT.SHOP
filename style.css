@@ -150,60 +150,17 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 a.ghost{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px}
 a.ghost:hover{border-color:var(--coral);color:var(--coral)}
 
-/* ============ FIXED HEADER & BLUR ALL-IN-ONE ============ */
-
-/* تثبيت الهيدر بالكامل فـ أعلى الشاشة */
-header, .site-header, nav {
-  position: fixed !important;
+/* تثبيت الهيدر وخانة البحث معاً بشكل صحيح */
+header, .search-container, .search-bar {
+  position: sticky !important;
   top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  z-index: 99 !important;
-  
-  /* خلفية شفافة متكيفة مع البلور */
-  background-color: var(--bg-header, rgba(11, 19, 43, 0.8)) !important;
+  z-index: 9999 !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.1)) !important;
-  
-  padding: 8px 12px !important;
-  box-sizing: border-box !important;
 }
 
-/* دعم اللون الأبيض الشفاف للوضع النهاري Light Mode */
-[data-theme="light"] header, body.light header, body.light-theme header {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* إضافة مسافة فارغة لأعلى الصفحة باش الهيدر الثابت ما يغطيش على البانر */
-body, main, #app {
-  padding-top: 110px !important;
-}
-
-/* 1. السطر الأول: ترتيب الشعار والأزرار فـ صف واحد أفقي */
-header > div:first-child, .header-top, .nav-container {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  flex-wrap: nowrap !important;
-  width: 100% !important;
-  gap: 6px !important;
-}
-
-/* منع زر Contact وباقي الأزرار من النزول */
-header button, header a, .contact-btn {
-  white-space: nowrap !important;
-  margin: 0 !important;
-  flex-shrink: 0 !important;
-}
-
-/* 2. السطر الثاني: مربع البحث تحتهم مباشرة بعرض كامل */
-header input[type="search"], header input, .search-bar {
-  width: 100% !important;
-  margin-top: 6px !important;
-  display: block !important;
-  box-sizing: border-box !important;
+/* إلغاء أي دفع زائد للصفحة */
+body {
+  padding-top: 0 !important;
 }
