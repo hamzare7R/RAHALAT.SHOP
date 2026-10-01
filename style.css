@@ -150,87 +150,73 @@ dialog::backdrop{background:rgba(15,27,45,.6)}
 a.ghost{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:4px}
 a.ghost:hover{border-color:var(--coral);color:var(--coral)}
 
-/* ==================== FINAL CLEAN MOBILE & THEME FIX ==================== */
+/* ==================== PERFECT HEADER & BLUR FIX ==================== */
 
-/* 1. إصلاح الهيدر ليدعم الوضع النهاري/الداكن والبلور بلمسة ناعمة */
-header, .header, nav {
+/* 1. جعل الهيدر ثابت مع تأثير البلور والدعم التلقائي للثيم الداكن والنهاري */
+header, .header {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  /* اعتماد متطلبات الثيم تلقائياً للوضعين */
-  background-color: var(--bg-header, rgba(11, 19, 43, 0.85)) !important; 
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.1)) !important;
   padding: 8px 12px !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  
+  /* خلفية شبه شفافة لضمان عمل البلور */
+  background-color: var(--header-bg, rgba(255, 255, 255, 0.8)) !important;
+  backdrop-filter: blur(12px) -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.08)) !important;
 }
 
-/* دعم لون خلفية الهيدر فـ Light Mode إذا كان متغيراً */
-[data-theme="light"] header, body.light header {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  color: #000 !important;
+/* لون الهيدر الشفاف للوضع الداكن */
+[data-theme="dark"] header, body.dark-theme header, body.dark header {
+  background-color: var(--header-bg-dark, rgba(11, 19, 43, 0.8)) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* 2. تنظيم أزرار الهيدر فـ صف واحد ممتد */
-header > div:first-child, .nav-container, .top-bar {
+/* 2. تنظيم السطر الأول (الشعار والزرار) في خط واحد */
+header .nav-container, 
+header > div:first-child, 
+.header-top {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: nowrap !important;
   width: 100% !important;
-  gap: 6px !important;
+  gap: 8px !important;
 }
 
-header input[type="search"], header input, .search-bar {
+/* محاذاة اللوجو والاسم */
+header .logo, header .brand, header a:first-child {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+/* تجميع الأزرار (Contact , AR , الثيم) في الجانب الآخر */
+header .nav-links, header .actions, header .header-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+/* زر Contact أنيق ومناسب للحجم */
+header a[href*="contact"], header .contact-btn, header button.contact {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
+  border-radius: 20px !important;
+  white-space: nowrap !important;
+}
+
+/* 3. شريط البحث أسفل السطر الأول مباشرة */
+header input[type="search"], header .search-input, header .search-bar {
   width: 100% !important;
   margin-top: 6px !important;
   box-sizing: border-box !important;
-}
-
-/* 3. إصلاح المساحات الجانبية وقسم البانر والتقييمات للهاتف */
-@media (max-width: 760px) {
-  /* حصر العرض لتفادي المسافات الفارغة فـ الجوانب */
-  html, body {
-    overflow-x: hidden !important;
-    width: 100% !important;
-  }
-
-  main, section, .hero, .shop-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* ترتيب قسم Hero (التقييمات والخصائص) */
-  .hero {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 15px !important;
-    padding: 16px 12px !important;
-    border-radius: 16px !important;
-  }
-
-  /* المنتجات: عمودان متجاوران بدون ضغط أو فراغات خارجية */
-  #products, .products-grid, .grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 10px 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .card {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-  }
 }
