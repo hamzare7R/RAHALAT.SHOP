@@ -120,3 +120,13 @@ a.ghost:hover{border-color:var(--coral);color:var(--coral)}
   .heart{top:8px;inset-inline-end:8px;width:30px;height:30px;font-size:1rem}
   .block{padding:24px 14px}
 }
+
+
+/* ===== SCROLL REVEAL ===== */
+@keyframes riseL{from{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:none}}
+@keyframes riseR{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:none}}
+.card.reveal.in:nth-child(odd){animation-name:riseL}
+.card.reveal.in:nth-child(even){animation-name:riseR}
+.card.reveal{opacity:0}
+.card.reveal.in{opacity:1;animation:rise .95s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:var(--d,0s)}
+@media (prefers-reduced-motion:reduce){.card.reveal{opacity:1}.card.reveal.in{animation:zoom .2s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:var(--d,0s)}}
