@@ -3,7 +3,7 @@
 .rah-chat-launch{display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:13px 20px;background:#0f1b2d;color:#fff;font:600 .95rem "DM Sans",sans-serif;box-shadow:0 12px 30px rgba(15,27,45,.25);cursor:pointer;transition:transform .2s,background .2s}
 .rah-chat-launch:hover{transform:translateY(-3px);background:#ff6b4a}
 .rah-chat-launch-icon{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#ff6b4a;color:white;font-size:1.1rem}
-.rah-chat-panel{position:absolute;inset-inline-end:0;bottom:0;width:min(380px,calc(100vw - 28px));height:min(570px,calc(100dvh - 125px));display:flex;flex-direction:column;overflow:hidden;border:1px solid #e6e1d6;border-radius:22px;background:#fff;box-shadow:0 18px 55px rgba(15,27,45,.25)}
+.rah-chat-panel{position:absolute;right:0;bottom:0;width:min(380px,calc(100vw - 28px));height:min(570px,calc(100dvh - 125px));display:flex;flex-direction:column;overflow:hidden;border:1px solid #e6e1d6;border-radius:22px;background:#fff;box-shadow:0 18px 55px rgba(15,27,45,.25)}
 .rah-chat-panel[hidden],.rah-chat-launch[hidden]{display:none}
 .rah-chat-head{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;background:#0f1b2d;color:#fff}
 .rah-chat-brand{display:flex;align-items:center;gap:10px}
