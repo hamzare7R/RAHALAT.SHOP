@@ -43,7 +43,8 @@ main{padding:16px clamp(16px,5vw,56px) 64px}
 
 .fab{position:fixed;inset-inline-end:20px;bottom:20px;z-index:30;display:flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;background:#25d366;color:#fff;text-decoration:none;font-weight:600;box-shadow:0 10px 24px rgba(37,211,102,.4);transition:transform .2s}
 .fab:hover{transform:scale(1.05)}
-footer{padding:24px clamp(16px,5vw,56px) 96px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+
+footer{padding:24px clamp(25px,5px,5px) 25px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 :focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 @media (max-width:760px){.hero{grid-template-columns:1fr;border-radius:20px}.stats{grid-template-columns:repeat(3,1fr)}.stats li{padding:12px}.stats b{font-size:1.3rem}.top .pill{display:none}.fab span{display:none}.fab{padding:16px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
