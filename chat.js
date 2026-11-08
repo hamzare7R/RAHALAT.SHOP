@@ -5,6 +5,7 @@
   const $ = (id) => document.getElementById(id);
   const root = document.createElement("div");
   root.id = "rahChat";
+  root.dir = "ltr";
   root.innerHTML = `
     <button class="rah-chat-launch" id="rahChatLaunch" type="button" aria-label="Open Rahalat AI chat">
       <span class="rah-chat-launch-icon" aria-hidden="true">✦</span><span class="rah-chat-launch-label">Rahalat AI</span>
@@ -60,6 +61,8 @@
     },
   };
 
+  let welcomeBubble = null;
+
   function setLanguage(next) {
     lang = next;
     const ar = lang === "ar";
@@ -68,6 +71,8 @@
     root.querySelector("[data-chat-subtitle]").textContent = labels[lang].subtitle;
     root.querySelector("[data-chat-note]").textContent = labels[lang].note;
     input.placeholder = labels[lang].placeholder;
+    input.dir = lang === "ar" ? "rtl" : "ltr";
+    if (welcomeBubble) welcomeBubble.textContent = labels[lang].welcome;
     const buttons = $("rahChatSuggestions").querySelectorAll("button");
     buttons.forEach((button, i) => {
       button.textContent = labels[lang].suggestions[i];
@@ -107,7 +112,7 @@
       const response = await fetch(WORKER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history.slice(-8), products: getProducts() }),
+        body: JSON.stringify({ messages: history.slice(-8), products: getProducts(), lang }),
       });
       const data = await response.json();
       if (!response.ok || !data.reply) throw new Error(data.error || "Request failed");
@@ -127,7 +132,7 @@
   $("rahChatLaunch").addEventListener("click", () => {
     panel.hidden = false;
     $("rahChatLaunch").hidden = true;
-    if (!messagesEl.children.length) addMessage("assistant", labels[lang].welcome);
+    if (!messagesEl.children.length) welcomeBubble = addMessage("assistant", labels[lang].welcome);
     input.focus();
   });
   $("rahChatClose").addEventListener("click", () => {
@@ -145,4 +150,10 @@
   });
 
   setLanguage(lang);
+
+  const languageObserver = new MutationObserver(() => {
+    const pageLang = document.documentElement.lang.toLowerCase().startsWith("ar") ? "ar" : "en";
+    if (pageLang !== lang) setLanguage(pageLang);
+  });
+  languageObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["lang", "dir"] });
 })();
