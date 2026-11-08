@@ -28,6 +28,8 @@ const products = [
 ];
 
 
+window.RAHALAT_PRODUCTS = products.map(p => ({ name: p.n, category: p.c, description: p.d, url: p.l }));
+
 const WA = "https://wa.me/212688962517";
 const FEATURED = [0, 1, 6, 7];
 products.forEach((p, k) => { p.id = k; p.featured = FEATURED.includes(k); });

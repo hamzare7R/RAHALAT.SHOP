@@ -1,0 +1,39 @@
+/* Rahalat AI shopping assistant */
+#rahChat{position:fixed;right:22px;bottom:92px;direction:ltr;z-index:1000;font-family:"DM Sans",system-ui,sans-serif;color:#0f1b2d}
+.rah-chat-launch{display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:13px 20px;background:#0f1b2d;color:#fff;font:600 .95rem "DM Sans",sans-serif;box-shadow:0 12px 30px rgba(15,27,45,.25);cursor:pointer;transition:transform .2s,background .2s}
+.rah-chat-launch:hover{transform:translateY(-3px);background:#ff6b4a}
+.rah-chat-launch-icon{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#ff6b4a;color:white;font-size:1.1rem}
+.rah-chat-panel{position:absolute;inset-inline-end:0;bottom:0;width:min(380px,calc(100vw - 28px));height:min(570px,calc(100dvh - 125px));display:flex;flex-direction:column;overflow:hidden;border:1px solid #e6e1d6;border-radius:22px;background:#fff;box-shadow:0 18px 55px rgba(15,27,45,.25)}
+.rah-chat-panel[hidden],.rah-chat-launch[hidden]{display:none}
+.rah-chat-head{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;background:#0f1b2d;color:#fff}
+.rah-chat-brand{display:flex;align-items:center;gap:10px}
+.rah-chat-avatar{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#ff6b4a;font-size:1.2rem}
+.rah-chat-brand strong,.rah-chat-brand small{display:block}
+.rah-chat-brand strong{font:700 1rem Outfit,sans-serif}
+.rah-chat-brand small{margin-top:2px;color:#c9d4e4;font-size:.72rem}
+.rah-chat-actions{display:flex;gap:7px}
+.rah-chat-actions button{width:32px;height:32px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:transparent;color:#fff;font:500 .8rem "DM Sans",sans-serif;cursor:pointer}
+.rah-chat-actions button:last-child{font-size:1.3rem}
+.rah-chat-messages{flex:1;display:flex;flex-direction:column;gap:10px;overflow:auto;padding:16px;background:#f7f4ee}
+.rah-chat-bubble{max-width:88%;padding:11px 13px;border-radius:15px;font-size:.88rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.rah-chat-bubble.is-ai{align-self:flex-start;border:1px solid #e6e1d6;border-bottom-left-radius:5px;background:#fff;color:#0f1b2d}
+.rah-chat-bubble.is-user{align-self:flex-end;border-bottom-right-radius:5px;background:#0f1b2d;color:#fff}
+.rah-chat-suggestions{display:flex;gap:7px;overflow-x:auto;padding:10px 12px 4px;background:#fff;scrollbar-width:none}
+.rah-chat-suggestions button{flex:none;border:1px solid #e6e1d6;border-radius:999px;padding:7px 10px;background:#fff;color:#0f1b2d;font:500 .72rem "DM Sans",sans-serif;cursor:pointer}
+.rah-chat-suggestions button:hover{border-color:#ff6b4a;color:#ff6b4a}
+.rah-chat-form{display:flex;gap:8px;padding:10px 12px;background:#fff}
+.rah-chat-form input{min-width:0;flex:1;border:1px solid #e6e1d6;border-radius:999px;padding:11px 14px;background:#fff;color:#0f1b2d;font:400 .85rem "DM Sans",sans-serif;outline:none}
+.rah-chat-form input:focus{border-color:#2f80ed}
+.rah-chat-form button{width:42px;height:42px;flex:none;border:0;border-radius:50%;background:#ff6b4a;color:#fff;font-size:1.1rem;cursor:pointer}
+.rah-chat-form button:disabled{opacity:.55;cursor:wait}
+.rah-chat-note{padding:0 14px 11px;background:#fff;color:#5d6675;text-align:center;font-size:.67rem}
+#rahChat [dir=rtl] .rah-chat-bubble.is-ai{border-bottom-left-radius:15px;border-bottom-right-radius:5px}
+#rahChat [dir=rtl] .rah-chat-bubble.is-user{border-bottom-right-radius:15px;border-bottom-left-radius:5px}
+:root[data-theme="dark"] #rahChat{color:#eef2f8}
+:root[data-theme="dark"] .rah-chat-panel{border-color:#26344d;background:#152033}
+:root[data-theme="dark"] .rah-chat-messages{background:#0b1220}
+:root[data-theme="dark"] .rah-chat-bubble.is-ai{border-color:#26344d;background:#152033;color:#eef2f8}
+:root[data-theme="dark"] .rah-chat-suggestions,:root[data-theme="dark"] .rah-chat-form,:root[data-theme="dark"] .rah-chat-note{background:#152033}
+:root[data-theme="dark"] .rah-chat-suggestions button,:root[data-theme="dark"] .rah-chat-form input{border-color:#26344d;background:#0b1220;color:#eef2f8}
+:root[data-theme="dark"] .rah-chat-note{color:#9aa7bb}
+@media(max-width:600px){#rahChat{right:14px;bottom:84px}.rah-chat-panel{height:min(620px,calc(100dvh - 105px));width:calc(100vw - 28px)}.rah-chat-launch{padding:12px 16px}}
