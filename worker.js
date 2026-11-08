@@ -100,7 +100,7 @@ function cleanProducts(input) {
   })).filter((p) => p.name && p.url);
 }
 
-async function ask(env, messages, products) {
+async function ask(env, messages, products, language) {
   const catalog = products.length
     ? "CURRENT PRODUCT CATALOG (source of truth; recommend only these items):\n" +
       JSON.stringify(products)
@@ -110,7 +110,7 @@ async function ask(env, messages, products) {
     try {
       const out = await env.AI.run(model, {
         messages: [
-          { role: "system", content: SYSTEM_PROMPT + "\n\n" + catalog },
+          { role: "system", content: SYSTEM_PROMPT + "\n\nRESPONSE LANGUAGE: " + (language === "ar" ? "Reply in Arabic/Moroccan Darija." : language === "fr" ? "Reply in French." : language === "de" ? "Reply in German." : language === "es" ? "Reply in Spanish." : "Reply in English.") + "\n\n" + catalog },
           ...messages,
         ],
         max_tokens: 420,
@@ -167,7 +167,8 @@ export default {
 
     try {
       const products = cleanProducts(payload.products);
-      const reply = await ask(env, messages, products);
+      const language = ["ar", "en", "fr", "de", "es"].includes(payload.lang) ? payload.lang : "en";
+      const reply = await ask(env, messages, products, language);
       return json({ reply }, 200, origin);
     } catch (e) {
       return json({ error: "ai failed", detail: String((e && e.message) || e) }, 502, origin);
