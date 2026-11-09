@@ -2,9 +2,9 @@
 // Cloudflare setup: Settings > Bindings > Workers AI > Variable name: AI
 
 const MODELS = [
-  "@cf/google/gemma-3-12b-it",
+  "@cf/zai-org/glm-4.7-flash",
+  "@cf/google/gemma-4-26b-a4b-it",
   "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-  "@cf/meta/llama-3.1-8b-instruct",
 ];
 
 const ALLOWED_ORIGINS = [
@@ -138,8 +138,9 @@ async function ask(env, messages, products, language) {
     : "No product catalog was supplied. Do not recommend specific products.";
   const latestUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content || "";
   const hasArabicScript = /[\u0600-\u06FF]/.test(latestUserMessage);
-  const languageInstruction = hasArabicScript
-    ? "Reply in Arabic / Moroccan Darija using Arabic script."
+  const expectsArabic = hasArabicScript || language === "ar";
+  const languageInstruction = expectsArabic
+    ? "Reply ONLY in Arabic / Moroccan Darija using Arabic script. Do not add an English preamble, English translation, or transliteration."
     : language === "ar" ? "Reply in Arabic / Moroccan Darija."
     : language === "fr" ? "Reply in French."
     : language === "de" ? "Reply in German."
@@ -161,8 +162,17 @@ async function ask(env, messages, products, language) {
         out.response ||
         (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content) ||
         "";
-      if (String(reply).trim()) return String(reply).trim();
-      lastError = model + ": empty response";
+      const textReply = String(reply).trim();
+      if (!textReply) {
+        lastError = model + ": empty response";
+        continue;
+      }
+      // Reject non-Arabic or visibly corrupted output for Arabic requests and try the next model.
+      if (expectsArabic && (!/[\u0600-\u06FF]/.test(textReply) || /\?{3,}/.test(textReply))) {
+        lastError = model + ": invalid Arabic-script response";
+        continue;
+      }
+      return textReply;
     } catch (e) {
       lastError = model + ": " + ((e && e.message) || e);
     }
