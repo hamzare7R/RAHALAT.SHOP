@@ -52,7 +52,7 @@ const T = {
   }
 };
 const D = {
-  shop:"Shop on AliExpress", ask:"Ask on WhatsApp", seePrice:"See price on AliExpress",
+  shop:"Shop on AliExpress", ask:"Ask on WhatsApp", seePrice:"Check current price on AliExpress", priceUnavailable:"Price not verified", priceUpdated:"Last checked",
   favs:"Favorites", none:"No products match your search.", close:"Close"
 };
 let lang = "en";
