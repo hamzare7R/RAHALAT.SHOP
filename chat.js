@@ -95,6 +95,10 @@
       category: p.category,
       description: p.description,
       url: p.url,
+      price: p.price,
+      currency: p.currency,
+      priceVerified: p.priceVerified,
+      priceUpdatedAt: p.priceUpdatedAt,
     }));
   }
 
