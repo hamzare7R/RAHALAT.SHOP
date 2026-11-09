@@ -48,6 +48,9 @@ SMART NEED DISCOVERY:
 3. If the request is broad and a key detail would materially change the recommendation, ask one short, focused question.
 4. If enough information is already available, do not delay with more questions: recommend suitable catalog items immediately.
 5. Respect the visitor's stated budget and priorities. Never assume a budget.
+6. The supplied catalog does not include verified current prices unless a price field is explicitly present. Never say or imply that selected items fit within a stated budget when their prices are missing or unverified.
+7. If prices are missing, say clearly that you cannot confirm the total or budget fit. You may help the visitor prioritize essential gear and suggest checking each AliExpress listing before buying.
+8. Do not treat the visitor's total budget as the price of each individual item.
 
 CATALOG-GROUNDED RECOMMENDATIONS:
 - The current product catalog included in the system message is the ONLY source of truth for products.
@@ -133,12 +136,21 @@ async function ask(env, messages, products, language) {
     ? "CURRENT PRODUCT CATALOG (source of truth; recommend only these items):\n" +
       JSON.stringify(products)
     : "No product catalog was supplied. Do not recommend specific products.";
+  const latestUserMessage = [...messages].reverse().find((m) => m.role === "user")?.content || "";
+  const hasArabicScript = /[\u0600-\u06FF]/.test(latestUserMessage);
+  const languageInstruction = hasArabicScript
+    ? "Reply in Arabic / Moroccan Darija using Arabic script."
+    : language === "ar" ? "Reply in Arabic / Moroccan Darija."
+    : language === "fr" ? "Reply in French."
+    : language === "de" ? "Reply in German."
+    : language === "es" ? "Reply in Spanish."
+    : "Reply in English.";
   let lastError = "no model worked";
   for (const model of MODELS) {
     try {
       const out = await env.AI.run(model, {
         messages: [
-          { role: "system", content: SYSTEM_PROMPT + "\n\nRESPONSE LANGUAGE: " + (language === "ar" ? "Reply in Arabic/Moroccan Darija." : language === "fr" ? "Reply in French." : language === "de" ? "Reply in German." : language === "es" ? "Reply in Spanish." : "Reply in English.") + "\n\n" + catalog },
+          { role: "system", content: SYSTEM_PROMPT + "\n\nRESPONSE LANGUAGE: " + languageInstruction + "\n\n" + catalog },
           ...messages,
         ],
         max_tokens: 420,
