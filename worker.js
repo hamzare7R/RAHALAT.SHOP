@@ -73,12 +73,12 @@ function tooMany(ip) {
   return recent.length > 15;
 }
 
-function cors(origin) {
-  const allowed = ALLOWED_ORIGINS.some((o) => origin === o || origin.startsWith(o + ":"));
+function cors() {
   return {
-    "Access-Control-Allow-Origin": allowed ? origin : ALLOWED_ORIGINS[0],
-    "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
+    "Access-Control-Allow-Origin": "https://rahalat-shop.vercel.app",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400",
     "Vary": "Origin",
   };
 }
@@ -86,7 +86,7 @@ function cors(origin) {
 function json(body, status, origin) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8", ...cors(origin) },
+    headers: { "Content-Type": "application/json; charset=utf-8", ...cors() },
   });
 }
 
@@ -134,7 +134,7 @@ export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
     if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: cors(origin) });
+      return new Response(null, { status: 204, headers: cors() });
     }
     if (request.method === "GET") {
       return json({ status: "ok", service: "Rahalat AI" }, 200, origin);
