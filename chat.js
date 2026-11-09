@@ -14,6 +14,7 @@
       <header class="rah-chat-head">
         <div class="rah-chat-brand"><span class="rah-chat-avatar">✦</span><div><strong>Rahalat AI</strong><small data-chat-subtitle>Your outdoor shopping assistant</small></div></div>
         <div class="rah-chat-actions">
+          <button type="button" id="rahChatNew" aria-label="Start a new chat" title="New chat">↺</button>
           <button type="button" id="rahChatLang" aria-label="Change chat language">AR</button>
           <button type="button" id="rahChatClose" aria-label="Close chat">×</button>
         </div>
@@ -37,8 +38,36 @@
   const input = $("rahChatInput");
   const form = $("rahChatForm");
   let lang = document.documentElement.lang === "ar" ? "ar" : "en";
+  const MEMORY_KEY = "rahalat_ai_conversation_v1";
+  const MAX_HISTORY = 8;
   let history = [];
   let busy = false;
+
+  function saveHistory() {
+    try { localStorage.setItem(MEMORY_KEY, JSON.stringify(history.slice(-MAX_HISTORY))); }
+    catch (_) {}
+  }
+
+  function restoreHistory() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(MEMORY_KEY) || "[]");
+      if (Array.isArray(saved)) {
+        history = saved
+          .filter((m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
+          .slice(-MAX_HISTORY)
+          .map((m) => ({ role: m.role, content: m.content.slice(0, 700) }));
+      }
+    } catch (_) { history = []; }
+    history.forEach((m) => addMessage(m.role, m.content));
+  }
+
+  function startNewChat() {
+    if (busy) return;
+    history = [];
+    messagesEl.innerHTML = "";
+    try { localStorage.removeItem(MEMORY_KEY); } catch (_) {}
+    welcomeBubble = addMessage("assistant", labels[lang].welcome);
+  }
 
   const labels = {
     en: {
@@ -109,6 +138,8 @@
     $("rahChatSend").disabled = true;
     addMessage("user", clean);
     history.push({ role: "user", content: clean });
+    history = history.slice(-MAX_HISTORY);
+    saveHistory();
     input.value = "";
     const typing = addMessage("assistant", labels[lang].thinking);
 
@@ -122,10 +153,12 @@
       if (!response.ok || !data.reply) throw new Error(data.error || "Request failed");
       typing.textContent = data.reply;
       history.push({ role: "assistant", content: data.reply });
-      history = history.slice(-8);
+      history = history.slice(-MAX_HISTORY);
+      saveHistory();
     } catch (error) {
       typing.textContent = labels[lang].error;
       history.pop();
+      saveHistory();
     } finally {
       busy = false;
       $("rahChatSend").disabled = false;
@@ -144,6 +177,7 @@
     $("rahChatLaunch").hidden = false;
   });
   $("rahChatLang").addEventListener("click", () => setLanguage(lang === "ar" ? "en" : "ar"));
+  $("rahChatNew").addEventListener("click", startNewChat);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     send(input.value);
@@ -154,6 +188,7 @@
   });
 
   setLanguage(lang);
+  restoreHistory();
 
   const languageObserver = new MutationObserver(() => {
     const pageLang = document.documentElement.lang.toLowerCase().startsWith("ar") ? "ar" : "en";
