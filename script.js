@@ -28,7 +28,7 @@ const products = [
 ];
 
 
-window.RAHALAT_PRODUCTS = products.map(p => ({ name: p.n, category: p.c, description: p.d, url: p.l }));
+window.RAHALAT_PRODUCTS = products.map(p => ({ name: p.n, category: p.c, description: p.d, url: p.l, price: p.price ?? null, currency: p.currency || "MAD", priceVerified: p.priceVerified === true, priceUpdatedAt: p.priceUpdatedAt || null }));
 
 const WA = "https://wa.me/212688962517";
 const FEATURED = [0, 1, 6, 7];
@@ -47,12 +47,12 @@ const T = {
     q3:"أحتاج مساعدة في الاختيار.", a3:"راسلنا على واتساب وسنساعدك.",
     contactT:"لنعمل معا", contactP:"عندك سؤال عن منتج أو طلب؟ تواصل معنا.",
     foot:"رحلات شوب يستعمل روابط الأفلييت. الأثمنة والشحن يحددهم البائعون على AliExpress.",
-    shop:"اشتري من AliExpress", ask:"اسأل عبر واتساب", seePrice:"شاهد الثمن على AliExpress",
+    shop:"اشتري من AliExpress", ask:"اسأل عبر واتساب", seePrice:"تحقق من السعر الحالي على AliExpress", priceUnavailable:"السعر غير متوفر حالياً", priceUpdated:"آخر تحديث للسعر",
     favs:"المفضلة", favT:"مفضلتك", none:"لا توجد منتجات مطابقة.", close:"إغلاق"
   }
 };
 const D = {
-  shop:"Shop on AliExpress", ask:"Ask on WhatsApp", seePrice:"See price on AliExpress",
+  shop:"Shop on AliExpress", ask:"Ask on WhatsApp", seePrice:"Check current price on AliExpress", priceUnavailable:"Price not verified", priceUpdated:"Last checked",
   favs:"Favorites", none:"No products match your search.", close:"Close"
 };
 let lang = "en";
@@ -75,9 +75,9 @@ function fb(img) {
 }
 window.fb = fb;
 const pic = p => '<img loading="lazy" alt="' + p.n + '" src="images/' + (p.id + 1) + '.jpg" data-n="' + (p.id + 1) + '" data-x="0" data-r="' + (p.i || "") + '" data-e="' + p.e + '" onerror="fb(this)">';
-const price = p => p.price
-  ? '<div class="price">' + (p.old ? "<s>" + p.old + "</s> " : "") + "<b>" + p.price + "</b></div>"
-  : '<div class="price muted">' + t("seePrice") + "</div>";
+const price = p => p.priceVerified === true && Number.isFinite(Number(p.price))
+  ? '<div class="price"><b>' + Number(p.price).toFixed(2) + " " + (p.currency || "MAD") + "</b>" + (p.priceUpdatedAt ? '<small class="price-date">' + t("priceUpdated") + ": " + p.priceUpdatedAt + "</small>" : "") + "</div>"
+  : '<div class="price muted">' + t("priceUnavailable") + ' · <a target="_blank" rel="noopener sponsored" href="' + p.l + '">' + t("seePrice") + "</a></div>";
 
 function card(p) {
   const el = document.createElement("article");
