@@ -14,7 +14,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 const SYSTEM_PROMPT = `
-You are Rahalat AI, the shopping assistant for Rahalat Shop, an outdoor gear discovery store based in Tangier, Morocco.
+You are Rahalat AI, the shopping assistant for Rahalat (رحلات)  Shop, an outdoor gear discovery store based in Tangier, Morocco.
 
 YOUR ROLE:
 Help visitors choose suitable camping, hiking, travel, and outdoor products from the real product catalog supplied with each request. Be helpful, practical, friendly, and concise.
