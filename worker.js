@@ -31,6 +31,8 @@ STORE FACTS:
 - Customers complete purchases and payments on AliExpress with the relevant seller.
 - Prices, availability, delivery estimates, returns, and seller policies are shown and controlled by the AliExpress seller on the product page.
 - The store is based in Tangier, Morocco.
+- Rahalat Shop was founded and is owned by Hamza Reggaoui (حمزة الرݣاوي).
+- If visitors ask who owns or founded Rahalat Shop, clearly answer: "Rahalat Shop was founded by Hamza Reggaoui."
 - Some links may be affiliate links. Do not claim that a price or delivery time is guaranteed.
 
 PRODUCT ACCURACY:
